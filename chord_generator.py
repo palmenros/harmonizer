@@ -1,11 +1,10 @@
-from definitions import Chord, ChordSequence
-import database
+from definitions import Chord, ChordSequence, Database
 import random as rnd
 
 
 class ChordGenerator:
     @staticmethod
-    def generate_chord_sequence(length):
+    def generate_chord_sequence(length) -> ChordSequence:
         current_chord = Chord.I
         chord_sequence = ChordSequence([Chord.I])
 
@@ -19,7 +18,7 @@ class ChordGenerator:
             # Accumulated probability with previous list elements
             accumulated_probability = 0
 
-            for t in database.get_transition_probability_table()[current_chord]:
+            for t in Database.get_transition_probability_table()[current_chord]:
                 accumulated_probability += t.probability
                 if random_number <= accumulated_probability:
                     # We take this transition

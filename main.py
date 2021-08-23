@@ -1,4 +1,5 @@
 from chord_generator import ChordGenerator
+from definitions import NoteName, Note
 
 if __name__ == "__main__":
     filename = "creation.mid"

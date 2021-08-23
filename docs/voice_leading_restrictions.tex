@@ -1,0 +1,64 @@
+\documentclass{article}
+
+\usepackage{geometry}[margins=0.5cm]
+
+
+\title{Voice Leading}
+\author{Nicolás López Funes}
+
+
+
+\begin{document}
+	\maketitle
+		
+	\section{Notación}
+	
+	Representamos con el primer libro la nota midi de la voz y con el segundo número el índice del acorde en el tiempo (es decir, el primer acorde que se toca, el segundo acorde que se toca, etc). Por ejemplo: Tenor(53 (nota midi),4 (acorde temporalmete))\\
+	
+	\section{Restricciones}
+	
+	\begin{enumerate}
+	
+		\item Bajo $<=$ Tenor $<=$ Contralto $<=$ Soprano\\
+	
+		\item Soprano(t).midi - Contralto(t).midi $<=$ 12 \\	
+		
+		\item Bajo(m,t+1) $<$ Tenor (n,t)    "superposicion de las voces"\\
+		
+		\item En el V (o cualquier dominante secundaria), si se duplica alguna nota, ha de ser el primer elemento del array. Si es un VII, no duplicar el segundo elemento del array.(duplicar quiere decir que dos voces hagan la misma nota)
+		
+		\item VozA.name(t) == VozB.name(t) entonces VozA.name(t+1) != VozB.name(t+1)   "octavas paralelas"\\
+		
+		
+		\item VozA.midi(t) == VozB.midi(t) + 7 + 12k      y    vozA.midi $>$ vozB.midi
+	     entonces vozA.midi(t+1) != VozB.midi(t+1) + 7 + 12k    "quintas paralelas"\\
+	     
+	     
+	    \item si abs(vozA.midi(t+1) - vozA.midi(t)) $>$ 2 y lo mismo la voz B, entonces VozA.name(t+1) != VozB.name(t+1) y no [vozA.midi(t+1) == VozB.midi(t+1) + 7 + 12k   y vozA.midi $>$ vozB.midi ]      "octavas y quintas directas"\\
+	    
+	    
+	    \item si abs(vozA.midi(t+1) - vozA.midi(t)) $>$ 7, entonces si vozA ha crecido (decrecido respectivamente), toca decrecer (crecer respectivamente) en como mucho 2 notas midi, es decir, abs(vozA.midi(t+2) - vozA.midi(t+1)) $<=$ 2\\
+	    
+	    
+	    \item Las quintas (tercer elemento del array), se puede suprimir en caso de necesidad, pero preferiblemente no\\
+	    
+	    
+	    \item Si el acorde es dominante (V, VII o dominante secundaria) entonces tiene sus propias reglas:  \\
+	    
+	    
+	    + la septima (cuarto elemento del array) del acorde, baja una nota midi (vozA(t+1) == vozA(t) - 1 ) si existe dicha nota en el próximo acorde
+	    
+	    
+	    
+	    + la sensible (segundo elemento del array o primero si se trata de un VII) sube una nota midi  (vozA(t+1) == vozA(t) - 1 ) si existe dicha nota en el próximo acorde
+	    
+	    + si la voz superior (si bajo, la voz superior es el tenor) a la que tiene la sensible es la quinta del acorde (tercer elemento del array),  entonces la sensible puede bajar 4 notas midi\\
+	    
+	    \item vozA.midi(t+1) - vozA.midi(t)  !=  6   (evitar saltos de tritono)
+	    
+	    \item Definimos que ocurre un intervalo de tercera  entre dos notas 1 y 2 si nota1.midi - nota2.midi $\in$ \{3,4\} y un 
+	    
+	    
+	\end{enumerate}    
+    
+\end{document}
